@@ -40,26 +40,26 @@ class ATMServiceImpl implements ATMService {
         }
         def boxes = repository.getMoneyBoxes()
         moneyBoxDTO.getBoxes().forEach { box, count ->
-            EnumMoneyBox.MONEY_BOX_50.equalsNominal(box) ? {
-                (boxes.get(box) as MoneyBox50) + count
+            if (EnumMoneyBox.MONEY_BOX_50.equalsNominal(box)) {
+                (boxes.get(EnumMoneyBox.MONEY_BOX_50) as MoneyBox50) + count
                 person.addRubles(count * 50)
-            } : null
-            EnumMoneyBox.MONEY_BOX_100.equalsNominal(box) ? {
-                (boxes.get(box) as MoneyBox100) + count
+            }
+            if (EnumMoneyBox.MONEY_BOX_100.equalsNominal(box)) {
+                (boxes.get(EnumMoneyBox.MONEY_BOX_100) as MoneyBox100) + count
                 person.addRubles(count * 100)
-            } : null
-            EnumMoneyBox.MONEY_BOX_500.equalsNominal(box) ? {
-                (boxes.get(box) as MoneyBox500) + count
+            }
+            if (EnumMoneyBox.MONEY_BOX_500.equalsNominal(box)) {
+                (boxes.get(EnumMoneyBox.MONEY_BOX_500) as MoneyBox500) + count
                 person.addRubles(count * 500)
-            } : null
-            EnumMoneyBox.MONEY_BOX_1000.equalsNominal(box) ? {
-                (boxes.get(box) as MoneyBox1000) + count
+            }
+            if (EnumMoneyBox.MONEY_BOX_1000.equalsNominal(box)) {
+                (boxes.get(EnumMoneyBox.MONEY_BOX_1000) as MoneyBox1000) + count
                 person.addRubles(count * 1000)
-            } : null
-            EnumMoneyBox.MONEY_BOX_5000.equalsNominal(box) ? {
-                (boxes.get(box) as MoneyBox5000) + count
+            }
+            if (EnumMoneyBox.MONEY_BOX_5000.equalsNominal(box)) {
+                (boxes.get(EnumMoneyBox.MONEY_BOX_5000) as MoneyBox5000) + count
                 person.addRubles(count * 5000)
-            } : null
+            }
         }
         if (!repository.saveMoney(boxes) &&
                 !repository.save(person)) {
@@ -80,10 +80,24 @@ class ATMServiceImpl implements ATMService {
         Map<String, Integer> dispensedMap = new HashMap<>()
         def boxes = repository.getMoneyBoxes()
 
-        Integer maxAmount
-        boxes.values().forEach {box -> maxAmount + box.amount}
+        Integer maxAmount = 0
+        boxes.values().forEach {box -> maxAmount = maxAmount + box.amount}
 
-        if (maxAmount >= moneyBoxDTO.amount) {
+        Integer getMoney = 0
+        moneyBoxDTO.boxes.forEach {box, count ->
+            EnumMoneyBox.MONEY_BOX_50.equalsNominal(box) ?
+                getMoney = 50 * count : null
+            EnumMoneyBox.MONEY_BOX_100.equalsNominal(box) ?
+                    getMoney = 100 * count : null
+            EnumMoneyBox.MONEY_BOX_500.equalsNominal(box) ?
+                    getMoney = 500 * count : null
+            EnumMoneyBox.MONEY_BOX_1000.equalsNominal(box) ?
+                    getMoney = 1000 * count: null
+            EnumMoneyBox.MONEY_BOX_5000.equalsNominal(box) ?
+                    getMoney = 5000 * count: null
+        }
+
+        if (getMoney >= maxAmount) {
             //Exception
             MoneyBoxDTO result = new MoneyBoxDTO()
             result.setMessage(ATM_CAN_NOT_DISPENSED_AMOUNT)
@@ -91,31 +105,31 @@ class ATMServiceImpl implements ATMService {
         }
 
         moneyBoxDTO.getBoxes().forEach { box, count ->
-            EnumMoneyBox.MONEY_BOX_50.equalsNominal(box) ? {
-                (boxes.get(box) as MoneyBox50) - count
+            if (EnumMoneyBox.MONEY_BOX_50.equalsNominal(box)) {
+                (boxes.get(EnumMoneyBox.MONEY_BOX_50) as MoneyBox50) - count
                 person.subtractRubles(count * 50)
                 dispensedMap.put(EnumMoneyBox.MONEY_BOX_50.nominal(), count)
-            } : null
-            EnumMoneyBox.MONEY_BOX_100.equalsNominal(box) ? {
-                (boxes.get(box) as MoneyBox100) - count
+            }
+            if (EnumMoneyBox.MONEY_BOX_100.equalsNominal(box)) {
+                (boxes.get(EnumMoneyBox.MONEY_BOX_100) as MoneyBox100) - count
                 person.subtractRubles(count * 100)
                 dispensedMap.put(EnumMoneyBox.MONEY_BOX_100.nominal(), count)
-            } : null
-            EnumMoneyBox.MONEY_BOX_500.equalsNominal(box) ? {
-                (boxes.get(box) as MoneyBox500) - count
+            }
+            if (EnumMoneyBox.MONEY_BOX_500.equalsNominal(box)) {
+                (boxes.get(EnumMoneyBox.MONEY_BOX_500) as MoneyBox500) - count
                 person.subtractRubles(count * 500)
                 dispensedMap.put(EnumMoneyBox.MONEY_BOX_500.nominal(), count)
-            } : null
-            EnumMoneyBox.MONEY_BOX_1000.equalsNominal(box) ? {
-                (boxes.get(box) as MoneyBox1000) - count
+            }
+            if (EnumMoneyBox.MONEY_BOX_1000.equalsNominal(box)) {
+                (boxes.get(EnumMoneyBox.MONEY_BOX_1000) as MoneyBox1000) - count
                 person.subtractRubles(count * 1000)
                 dispensedMap.put(EnumMoneyBox.MONEY_BOX_1000.nominal(), count)
-            } : null
-            EnumMoneyBox.MONEY_BOX_5000.equalsNominal(box) ? {
-                (boxes.get(box) as MoneyBox5000) - count
+            }
+            if (EnumMoneyBox.MONEY_BOX_5000.equalsNominal(box)) {
+                (boxes.get(EnumMoneyBox.MONEY_BOX_5000) as MoneyBox5000) - count
                 person.subtractRubles(count * 5000)
                 dispensedMap.put(EnumMoneyBox.MONEY_BOX_5000.nominal(), count)
-            } : null
+            }
         }
         if (!repository.saveMoney(boxes) &&
                 !repository.save(person)) {
@@ -125,7 +139,22 @@ class ATMServiceImpl implements ATMService {
 
         MoneyBoxDTO dispensedDto = new MoneyBoxDTO()
         dispensedDto.setBoxes(dispensedMap)
-        dispensedDto.setMessage("Pay ${dispensedDto.boxes.values().sum().toString()}")
+
+        Integer payMoney = 0
+        dispensedDto.boxes.forEach {box, count ->
+            EnumMoneyBox.MONEY_BOX_50.equalsNominal(box) ?
+                    payMoney = payMoney + 50 * count : payMoney
+            EnumMoneyBox.MONEY_BOX_100.equalsNominal(box) ?
+                    payMoney = payMoney + 100 * count : payMoney
+            EnumMoneyBox.MONEY_BOX_500.equalsNominal(box) ?
+                    payMoney = payMoney + 500 * count : payMoney
+            EnumMoneyBox.MONEY_BOX_1000.equalsNominal(box) ?
+                    payMoney = payMoney + 1000 * count : payMoney
+            EnumMoneyBox.MONEY_BOX_5000.equalsNominal(box) ?
+                    payMoney = payMoney + 5000 * count : payMoney
+        }
+
+        dispensedDto.setMessage("Pay ${payMoney}")
         return dispensedDto
     }
 
@@ -138,7 +167,7 @@ class ATMServiceImpl implements ATMService {
         }
 
         personDTO.setRubles(person.rubles)
-        personDTO.setRubles(person.kopeck)
+        personDTO.setKopeck(person.kopeck)
         return personDTO
     }
 

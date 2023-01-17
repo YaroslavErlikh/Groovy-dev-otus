@@ -21,16 +21,16 @@ class MainATM {
         println("Insert your card")
         Scanner sc = new Scanner(System.in)
 
+        PersonDTO personDTO = new PersonDTO()
+        personDTO.setCardNumber(sc.nextLine())
+        if (controller.authorize(personDTO)) {
+            this.personDTO = controller.findPerson(personDTO)
+        } else {
+            println('Authorization error, insert another card')
+        }
         boolean exit = false
         while (!exit) {
-            PersonDTO personDTO = new PersonDTO()
-            personDTO.setCardNumber(sc.nextLine())
-            if (controller.authorize(personDTO)) {
-                this.personDTO = controller.findPerson(personDTO)
-                exit = process(sc, exit)
-            } else {
-                println('Authorization error, insert another card')
-            }
+            exit = process(sc, exit)
         }
 
     }
@@ -77,19 +77,19 @@ class MainATM {
                 println("Insert amount aliquot - ${controller.getAliquot()}")
                 def getMoney = sc.nextInt()
                 Integer count5000 = (Integer) (getMoney / 5000)
-                if (!count5000) {
+                if (count5000) {
                     getMoney = getMoney - (count5000 * 5000)
                 }
                 Integer count1000 = (Integer) (getMoney / 1000)
-                if (!count1000) {
+                if (count1000) {
                     getMoney = getMoney - (count1000 * 1000)
                 }
                 Integer count500 = (Integer) (getMoney / 500)
-                if (!count500) {
+                if (count500) {
                     getMoney = getMoney - (count500 * 500)
                 }
                 Integer count100 = (Integer) (getMoney / 100)
-                if (!count100) {
+                if (count100) {
                     getMoney = getMoney - (count100 * 100)
                 }
                 Integer count50 = (Integer) (getMoney / 50)
