@@ -26,14 +26,14 @@ class ATMController {
     }
 
     MoneyBoxDTO dispensedMoney(String cardNumber, MoneyBoxDTO moneyBoxDTO) {
-        service.dispensedMoney(cardNumber, moneyBoxDTO)
+        return service.dispensedMoney(cardNumber, moneyBoxDTO)
     }
 
     PersonDTO getCashBalance(PersonDTO personDTO) {
-        service.getCashBalance(personDTO)
+        return service.getCashBalance(personDTO)
     }
 
     String getAliquot() {
-        service.getAliquot()
+        return service.getAliquot()
     }
 }

@@ -57,7 +57,7 @@ class PersonDTO {
     }
 
     void computeAmount() {
-        rubles.toString() + ',' + kopeck.toString()
+        amount = rubles.toString() + ',' + kopeck.toString()
     }
 
     Integer getRubles() {

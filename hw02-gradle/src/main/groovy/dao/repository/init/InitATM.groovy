@@ -65,7 +65,7 @@ class InitATM {
     }
 
     static Map<EnumMoneyBox, MoneyBox> initMoneyBox() {
-        Map<EnumMoneyBox, MoneyBox> mapMoneyBox = new HashMap<>()
+        Map<EnumMoneyBox, MoneyBox> mapMoneyBox = new LinkedHashMap<>()
 
         MoneyBox50 moneyBox50 = new MoneyBox50()
         moneyBox50 + 3000
