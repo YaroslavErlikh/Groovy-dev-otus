@@ -13,7 +13,7 @@ dependencies {
     implementation 'org.codehaus.groovy:groovy-all:3.0.11'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
-    implementation group: 'com.google.guava', name: 'guava', version: '11.0.2'
+    testImplementation group: 'org.codehaus.groovy', name: 'groovy-test', version: '3.0.14'
 }
 
 test {

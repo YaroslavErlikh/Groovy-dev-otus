@@ -1,3 +1,4 @@
 rootProject.name = 'Lesson1'
 include 'hw03-gradle'
+include 'hw02-gradle'
 
