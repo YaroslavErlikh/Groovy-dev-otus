@@ -33,7 +33,7 @@ class Repo {
         tasks.size()
     }
 
-    getListTasks() {
+    def getListTasks() {
         tasks
     }
 }
