@@ -37,7 +37,7 @@ class JdbcDataTemplateImpl<T> implements DataTemplate<T> {
     }
 
     @Override
-    void update(Object connection, T object) {
+    long update(Object connection, T object) {
         def map = object.properties
         map.remove(entityClassMetaData.idField.name)
         def id = object.properties.get(entityClassMetaData.idField.name) as long

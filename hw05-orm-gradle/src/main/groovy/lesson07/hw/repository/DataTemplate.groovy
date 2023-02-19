@@ -9,5 +9,5 @@ interface DataTemplate<T> {
 
     long insert(connection, T object);
 
-    void update(connection, T object);
+    long update(connection, T object);
 }
