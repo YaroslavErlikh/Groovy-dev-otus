@@ -1,0 +1,52 @@
+plugins {
+    id 'groovy'
+    id 'groovy-gradle-plugin'
+}
+
+apply plugin: FirstPlugin
+apply plugin: SecondPlugin
+apply plugin: CodegenPlugin
+
+codegenPlugin {
+    messageFileProperty = layout.projectDirectory.file("message.txt").getAsFile()
+    packageNameProperty = "ru.mysrc.codegen"
+}
+
+secondPlugin {
+    message = 'Hi from SecondPlugin'
+    builder = 'Gradle'
+}
+
+def greetingFile = objects.fileProperty()
+
+tasks.register('greet', FirstTaskWriteToFile) {
+    destination = greetingFile
+}
+
+tasks.register('sayGreeting') {
+    dependsOn greet
+    doLast {
+        def file = greetingFile.get().asFile
+        println "${file.text} (file: ${file.name})"
+    }
+}
+
+greetingFile.set(layout.buildDirectory.file('hello.txt'))
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation localGroovy()
+    implementation 'org.apache.groovy:groovy-all:4.0.2'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+}
+
+test {
+    useJUnitPlatform()
+}

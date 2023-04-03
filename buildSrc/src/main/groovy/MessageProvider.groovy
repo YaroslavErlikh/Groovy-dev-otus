@@ -1,0 +1,3 @@
+interface MessageProvider {
+    String provide()
+}
