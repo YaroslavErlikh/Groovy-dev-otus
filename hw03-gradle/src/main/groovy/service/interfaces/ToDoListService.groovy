@@ -1,5 +1,7 @@
 package service.interfaces
 
+import controller.dto.TaskDto
+
 import java.time.LocalDate
 import java.time.LocalDateTime
 
