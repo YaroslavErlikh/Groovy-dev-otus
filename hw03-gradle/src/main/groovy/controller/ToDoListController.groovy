@@ -104,16 +104,16 @@ class ToDoListController {
     HttpResponse<Map<Pair, List<TaskDto>>> busyTimeByDay(LocalDate date) {
         Map<Pair, List<Task>> map = service.getBusyTimeByDay(date)
         Map<Pair, List<TaskDto>> result = [:]
-        map.entrySet().each {
-            it.getValue().each {v ->
+        map.each {k,v ->
+            v.each {task ->
                 def taskDto = new TaskDto()
-                taskDto.setTaskId(v.taskId)
-                taskDto.setTaskName(v.taskName)
+                taskDto.setTaskId(task.taskId)
+                taskDto.setTaskName(task.taskName)
 
                 List<ActionDto> actionDtoList = []
                 v.actionList.each { action ->
                     ActionDto actionDto = new ActionDto()
-                    actionDto.setTaskId(v.taskId)
+                    actionDto.setTaskId(task.taskId)
                     actionDto.setActionId(action.actionId)
                     actionDto.setActionName(action.action)
                     actionDto.setDuration(action.duration)
@@ -121,10 +121,10 @@ class ToDoListController {
                     actionDtoList << actionDto
                 }
                 taskDto.setActionDtoList(actionDtoList)
-                taskDto.setTaskStart(v.startTask)
-                taskDto.setTaskEnd(v.endTask)
+                taskDto.setTaskStart(task.startTask)
+                taskDto.setTaskEnd(task.endTask)
 
-                result << [it.key : taskDto]
+                result << [k : taskDto]
             }
         }
 
