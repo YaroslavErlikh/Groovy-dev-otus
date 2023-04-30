@@ -1,27 +1,17 @@
 plugins {
     id 'groovy'
+    id 'java-gradle-plugin'
     id 'groovy-gradle-plugin'
+    id 'ru-erlikh-codegen-plugin'
 }
 
-apply plugin: FirstPlugin
-apply plugin: SecondPlugin
-apply plugin: CodegenPlugin
-
-codegenPlugin {
-    messageFileProperty = layout.projectDirectory.file("message.txt").getAsFile()
+//apply plugin: CodegenPlugin
+simpleCodegen {
+    messageFileProperty = layout.projectDirectory.file("message.txt")
     packageNameProperty = "ru.mysrc.codegen"
 }
 
-secondPlugin {
-    message = 'Hi from SecondPlugin'
-    builder = 'Gradle'
-}
-
 def greetingFile = objects.fileProperty()
-
-tasks.register('greet', FirstTaskWriteToFile) {
-    destination = greetingFile
-}
 
 tasks.register('sayGreeting') {
     dependsOn greet
@@ -38,6 +28,8 @@ version '1.0-SNAPSHOT'
 
 repositories {
     mavenCentral()
+    mavenLocal()
+    gradlePluginPortal()
 }
 
 dependencies {

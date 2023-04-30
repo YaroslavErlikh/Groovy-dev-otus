@@ -1,0 +1,35 @@
+plugins {
+    id 'groovy'
+    id 'java-gradle-plugin'
+    id 'groovy-gradle-plugin'
+    id 'com.gradle.plugin-publish' version '1.2.0'
+    id 'maven-publish'
+}
+
+gradlePlugin {
+    plugins {
+        codegenPlugin {
+            id = 'ru-erlikh-codegen-plugin'
+            displayName = 'Gradle Generator Plugin'
+            description = 'Gradle plugin for code generation'
+            implementationClass = 'ru.erlikh.plugin.CodegenPlugin'
+        }
+    }
+}
+
+group 'ru.erlikh'
+version '1.0'
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+    gradlePluginPortal()
+}
+
+dependencies {
+    testImplementation("junit:junit:4.12")
+    testImplementation("io.mockk:mockk:1.11.0")
+
+    implementation("com.squareup:kotlinpoet:1.7.2")
+    implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.10")
+}

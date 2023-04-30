@@ -1,3 +1,5 @@
+package ru.erlikh.plugin
+
 class FileDecoratedMessageProvider implements MessageProvider {
 
     private File messageFile

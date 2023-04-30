@@ -1,3 +1,5 @@
+package ru.erlikh.plugin
+
 import org.gradle.api.provider.Property
 
 interface CodegenPluginExtension {

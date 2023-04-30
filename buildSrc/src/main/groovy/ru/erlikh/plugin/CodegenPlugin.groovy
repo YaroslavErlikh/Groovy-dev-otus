@@ -1,3 +1,5 @@
+package ru.erlikh.plugin
+
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.tasks.SourceSetContainer
@@ -5,7 +7,7 @@ import org.gradle.api.tasks.SourceSetContainer
 class CodegenPlugin implements Plugin<Project> {
 
     void apply(Project project) {
-        def extension = project.extensions.create('codegenPlugin', CodegenPluginExtension)
+        def extension = project.extensions.create('simpleCodegen', CodegenPluginExtension)
 
         CodegenTask codegenTask = project.tasks.register("codegenSimpleClass", CodegenTask.class) {
             group = "Code generation"

@@ -1,3 +1,5 @@
+package ru.erlikh.plugin
+
 class LoveGradleMessageDecorator implements MessageDecorator {
 
     @Override
