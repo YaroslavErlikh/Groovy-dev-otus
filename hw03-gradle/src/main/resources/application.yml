@@ -1,0 +1,12 @@
+micronaut:
+  application:
+    name: ToDoList
+  server:
+    port: 8080
+
+jackson:
+  serialization:
+    indentOutput: true
+    writeDatesAsTimestamps: false
+  deserialization:
+    failOnUnknownProperties: false
